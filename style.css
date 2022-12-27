@@ -1,0 +1,38 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header {
+    margin-top: 20px;
+}
+
+footer {
+    height: 2rem;
+    background-color: whitesmoke;
+    width: calc(100% - 10px);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.maingrid {
+    display: grid;
+    grid-template-rows: minmax(150px, 1fr) minmax(150px, 1fr) minmax(150px, 1fr);
+    grid-template-columns: minmax(150px, 1fr) minmax(150px, 1fr) minmax(150px, 1fr);
+}
+
+.gridelement {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    background-color: whitesmoke;
+    border: 1px solid black;
+}
