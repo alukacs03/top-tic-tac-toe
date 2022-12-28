@@ -1,6 +1,7 @@
 html, body {
     margin: 0;
     height: 100%;
+    background-image: url(/resources/rat-spinning.gif);
 }
 body {
     display: flex;
@@ -13,13 +14,57 @@ header {
     margin-top: 20px;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+h1, h3 {
+    color: magenta;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Comic Sans MS';
+}
+
 footer {
-    height: 2rem;
+    height: 3rem;
     background-color: whitesmoke;
     width: calc(100% - 10px);
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 1rem;
     padding-left: 10px;
+}
+
+a {
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: none;
+    color: black;
+
+}
+
+button {
+    background-color: magenta;
+    font-family: 'Comic Sans MS', Helvetica, Arial;
+    font-weight: bold;
+    color: white;
+    font-size: 1.5rem;
+}
+
+button:hover {
+    background-color: rgb(255, 0, 98);
+}
+
+#communicationdisplay {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-family: 'Comic Sans MS';
+    animation-name: textcolor, spinner;
+    transform-style: preserve-3d;
 }
 
 .maingrid {
@@ -33,6 +78,39 @@ footer {
     justify-content: center;
     align-items: center;
     font-size: 3rem;
-    background-color: whitesmoke;
+    animation: bgcolor 3s infinite;
+    animation-direction: alternate;
     border: 1px solid black;
+}
+
+.spinner {
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+    transform-style: preserve-3d;
+    text-align: center;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotateY(0deg)
+    }
+    to {
+        transform: rotateY(-360deg)
+    }
+}
+
+@keyframes bgcolor {
+    0%   {background-color: red;}
+    25%  {background-color: yellow;}
+    50%  {background-color: blue;}
+    75%  {background-color: green;}
+    100% {background-color: red;}
+}
+
+@keyframes textcolor {
+    25%  {color: yellow;}
+    50%  {color: blue;}
+    75%  {color: green;}
 }

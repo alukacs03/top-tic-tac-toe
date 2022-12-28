@@ -22,14 +22,20 @@ const board = (() => {
                     }
                     game.checkWinner();
                     game.nextPlayer();
-                    game.display.refreshDisplay();
-
+                    if (game.alreadyWon === false) {
+                        if (game.alreadyWon == false && game.checkIfFull()) {
+                            display.commDisplay.textContent = `The game is a TIE`
+                        } else {
+                            game.display.refreshDisplay();
+                        }
+                    }
                 }
             })
             mainGridDiv.appendChild(newSquare);
             fields.push(newSquare);
         }
     }
+
     const reload = () => {
         let boardElements = document.querySelectorAll('.gridelement');
         boardElements.forEach(e => e.remove());
@@ -37,15 +43,14 @@ const board = (() => {
         game.resetInitPlayer();
         game.alreadyWon = false;
         load();
+        game.display.refreshDisplay();
     }
+
     const reloadButton = document.querySelector('#reload');
     reloadButton.addEventListener('click', reload);
     load();
     return { fields, reload }
 })();
-
-
-
 
 const game = (() => {
 
@@ -58,25 +63,20 @@ const game = (() => {
 
     const display = (() => {
 
-        let commDisplay = document.createElement('div');
+        const commDisplay = document.createElement('div');
         commDisplay.id="communicationdisplay";
-        let nextMoveDisplay = document.createElement('span');
-        nextMoveDisplay.id="name";
+        commDisplay.classList.add('spinner')
+        commDisplay.classList.add('spinnable')
 
         const main = document.querySelector('main');
         main.prepend(commDisplay);
-        commDisplay.appendChild(nextMoveDisplay);
-        nextMoveDisplay.textContent = currPlayer.sign
 
         let refreshDisplay = () => {
-            commDisplay.textContent = `Next move: ${currPlayer.sign}`
+            commDisplay.textContent = `Next move: ${game.currPlayer.sign}`;
         }
-
-        refreshDisplay();
 
         return { commDisplay, refreshDisplay }
     })();
-
 
     const validWinSituations = [
         [0,1,2],
@@ -97,6 +97,7 @@ const game = (() => {
     function checkWinner(){ // checks whether there is a winner, and if there is, then declares it
         validWinSituations.forEach( (e) => {
             if (board.fields[e[0]].textContent === this.currPlayer.sign && board.fields[e[1]].textContent === this.currPlayer.sign && board.fields[e[2]].textContent === this.currPlayer.sign) {
+                display.refreshDisplay();
                 console.log(`Winner: ${this.currPlayer.sign}`);
                 display.commDisplay.textContent = `Winner: ${this.currPlayer.sign}`
                 this.alreadyWon = true;
@@ -104,6 +105,7 @@ const game = (() => {
         });
         if (game.alreadyWon == false && checkIfFull()) { // if there hasn't been a winner yet, check whether the grid is full
             display.commDisplay.textContent = `The game is a TIE`
+            console.log('TIEEEE')
         }
     }
 
@@ -113,7 +115,6 @@ const game = (() => {
         } else {
             this.currPlayer = playerOne;
         }
-        display.refreshDisplay();
     }
 
     function checkIfFull() { // checks if the grid is full (meaning there has been a tie if true, otherwise a winner would have been selected)
@@ -122,5 +123,26 @@ const game = (() => {
         return (valueArray.includes('')) ? false : true;
     }
 
-    return { currPlayer, nextPlayer, checkWinner, resetInitPlayer, alreadyWon, display }
+    return { currPlayer, nextPlayer, checkWinner, resetInitPlayer, alreadyWon, display, checkIfFull }
 })();
+
+game.display.refreshDisplay(); // draws the initial 'Next move' display
+
+const spinBtn = document.querySelector('#spinBtn');
+spinBtn.addEventListener('click', switchSpinning);
+
+function switchSpinning() { // switch the spinner functionality
+    let spinnableElements = document.querySelectorAll('.spinnable')
+    let spinnyBoys = document.getElementsByClassName('spinner');
+    if (spinnyBoys.length > 0) {
+        Array.from(spinnyBoys).forEach(e => e.classList.remove('spinner'));
+        spinBtn.textContent = "LET 'EM SPIN AGAIN";
+    }
+    else {
+        spinnableElements.forEach(e => e.classList.add('spinner'));
+        spinBtn.textContent = "STOP SPINNING";
+    }
+}
+
+const audio = document.querySelector('audio'); // set the audioplayer to a lower volume by default
+audio.volume = 0.2
