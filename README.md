@@ -1,5 +1,4 @@
 # top-tic-tac-toe
  Tic Tac Toe made for The Odin Project
-
-Had some fun with the CSS animations. I will probably make another version that isn't as "funky". 
-This does NOT represent my professionality at all. 
+This is the normal version, the one i will publish to The Odin Project.
+The other version is interesting and funky, but this is the one that has proper CSS styling.
