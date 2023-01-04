@@ -1,7 +1,7 @@
 html, body {
     margin: 0;
     height: 100%;
-    background-image: url(/resources/rat-spinning.gif);
+    background-image: url(./resources/rat-spinning.gif);
 }
 body {
     display: flex;
