@@ -65,8 +65,6 @@ const game = (() => {
 
         const commDisplay = document.createElement('div');
         commDisplay.id="communicationdisplay";
-        commDisplay.classList.add('spinner')
-        commDisplay.classList.add('spinnable')
 
         const main = document.querySelector('main');
         main.prepend(commDisplay);
@@ -127,22 +125,3 @@ const game = (() => {
 })();
 
 game.display.refreshDisplay(); // draws the initial 'Next move' display
-
-const spinBtn = document.querySelector('#spinBtn');
-spinBtn.addEventListener('click', switchSpinning);
-
-function switchSpinning() { // switch the spinner functionality
-    let spinnableElements = document.querySelectorAll('.spinnable')
-    let spinnyBoys = document.getElementsByClassName('spinner');
-    if (spinnyBoys.length > 0) {
-        Array.from(spinnyBoys).forEach(e => e.classList.remove('spinner'));
-        spinBtn.textContent = "LET 'EM SPIN AGAIN";
-    }
-    else {
-        spinnableElements.forEach(e => e.classList.add('spinner'));
-        spinBtn.textContent = "STOP SPINNING";
-    }
-}
-
-const audio = document.querySelector('audio'); // set the audioplayer to a lower volume by default
-audio.volume = 0.2
